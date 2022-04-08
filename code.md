@@ -1,5 +1,5 @@
 #### 字符串split
-```C++
+```cpp {.line-numbers}
 void split(const string &s, vector<string> &tokens, const string &delemiters = " ")
 {
     string::size_type lastPos = s.find_first_not_of(delemiters, 0);
@@ -14,7 +14,7 @@ void split(const string &s, vector<string> &tokens, const string &delemiters = "
 ```
 
 #### 字符串与数字相互转换
-```C++
+```cpp {.line-numbers}
 // 数字转字符串
 string to_string (int val);
 string to_string (long val);
@@ -37,7 +37,7 @@ cout << setiosflags(ios::showpos); // 强制显示符号
 ```
 
 #### 取整与四舍五入
-```C++
+```cpp {.line-numbers}
 floor; // 向下取整
 ceil;  // 向上取整
 round; // 仅仅对小数点后一位四舍五入
@@ -46,11 +46,10 @@ round; // 仅仅对小数点后一位四舍五入
 double x = 1.5684;
 double y = round(x * 100) / 100;  // 保留两位有效数字
 ```
-
 <div STYLE="page-break-after: always;"></div>
 
 #### cctype
-```C++
+```cpp {.line-numbers}
 isalnum(); // 判断一个字符是不是alphanumeric，即大小写英文字母或是数字
 isalpha(); // 判断一个字符是不是alphabetic，即英文字母
 isdigit(); // 判断一个字符是不是数字
@@ -59,7 +58,7 @@ toupper(); // 将小写转换为大写
 ```
 
 #### 下一个排列
-```C++
+```cpp {.line-numbers}
 void nextPermutation(vector<int>& nums) {
     int i = nums.size() - 2;
     while (i >= 0 && nums[i] >= nums[i + 1]) {
@@ -77,7 +76,7 @@ void nextPermutation(vector<int>& nums) {
 ```
 
 #### 堆
-```C++
+```cpp {.line-numbers}
 vector<int> vec = {1, 4, 2, 3, 5};
 make_heap(vec.begin(), vec.end(), greater<int>()); // 小顶堆
 
@@ -96,7 +95,7 @@ vec.pop_back();
 <div STYLE="page-break-after: always;"></div>
 
 #### 优先队列
-```C++
+```cpp {.line-numbers}
 struct Node
 {
     int _x;
@@ -129,7 +128,7 @@ priority_queue<Node, vector<Node>, cmp2> q4;       // 结构体小根堆
 <div STYLE="page-break-after: always;"></div>
 
 #### STL sort
-```C++
+```cpp {.line-numbers}
 struct Node
 {
     int _x;
