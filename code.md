@@ -168,3 +168,63 @@ sort(vecNode.begin(), vecNode.end(), [&](const Node &lhs, const Node &rhs)
 sort(vecNode.begin(), vecNode.end(), [&](const Node &lhs, const Node &rhs)
     { return lhs._x > rhs._x || (lhs._x == rhs._x && lhs._y > rhs._y); });
 ```
+
+<div STYLE="page-break-after: always;"></div>
+
+#### 线程A和B交替打印奇数和偶数
+```cpp {.line-numbers}
+#include <mutex>
+#include <thread>
+#include <condition_variable>
+#include <functional>
+#include <iostream>
+
+class solution
+{
+public:
+    void getResult()
+    {
+        flag = true;
+        i = 1;
+
+        std::thread tA(std::bind(&solution::funcA, this));
+        std::thread tB(std::bind(&solution::funcB, this));
+
+        tA.join();
+        tB.join();
+    }
+
+private:
+    int i;
+    std::mutex __mutex;                // 互斥锁
+    std::condition_variable __condVal; // 条件变量
+    bool flag;
+
+    void funcA()
+    {
+        while (i < 100)
+        {
+            // std::this_thread::sleep_for(std::chrono::seconds(1));
+            std::unique_lock<std::mutex> lck(__mutex);
+            __condVal.wait(lck, [&]
+                           { return flag; }); // 当flag=true时打印奇数
+            std::cout << "A: " << i++ << std::endl;
+            flag = false;
+            __condVal.notify_one();
+        }
+    }
+
+    void funcB()
+    {
+        while (i < 100)
+        {
+            std::unique_lock<std::mutex> lck(__mutex);
+            __condVal.wait(lck, [&]
+                           { return !flag; }); // 当flag=false时打印偶数
+            std::cout << "B: " << i++ << std::endl;
+            flag = true;
+            __condVal.notify_one();
+        }
+    }
+};
+```
